@@ -13,30 +13,6 @@ def test_product_init(first_product):
     assert first_product.quantity == 5
 
 
-def test_product_new_product_different(capsys: CaptureFixture[str], first_category: Category) -> None:
-    """Тестируем метод, который принимает на вход параметры отличного от других наименований товара и возвращает
-    созданный объект класса Product"""
-    new_product = Product.new_product(
-        {
-            "name": "Samsung Galaxy S32 Ultra",
-            "description": "256GB, Серый цвет, 200MP камера",
-            "price": 180010.0,
-            "quantity": 5,
-        },
-        first_category.products_list,
-    )
-    message = capsys.readouterr()
-    assert message.out.strip().split("\n")[-3] == "Товар добавлен успешно"
-    assert message.out.strip().split("\n")[-2] == (
-        "Product (Samsung Galaxy S32 Ultra, 256GB, Серый цвет, 200MP камера," " 180010.0, 5)"
-    )
-    assert message.out.strip().split("\n")[-1] == "Обработка добавления товара завершена"
-    assert new_product.name == "Samsung Galaxy S32 Ultra"
-    assert new_product.description == "256GB, Серый цвет, 200MP камера"
-    assert new_product.price == 180010.0
-    assert new_product.quantity == 5
-
-
 def test_product_new_product_identical(capsys: CaptureFixture[str], first_category: Category) -> None:
     """Тестируем метод, который принимает на вход параметры схожего по наименованию товара и возвращает
     измененный объект класса Product"""

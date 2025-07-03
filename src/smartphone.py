@@ -20,3 +20,9 @@ class Smartphone(Product):
         self.model = model
         self.memory = memory
         self.color = color
+
+    def __add__(self, other):
+        """Метод для ограничения сложения разных классов."""
+        if type(other) is self.__class__:
+            return self.quantity + other.quantity
+        raise TypeError

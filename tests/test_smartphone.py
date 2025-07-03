@@ -1,3 +1,5 @@
+import pytest
+
 from src.smartphone import Smartphone
 
 
@@ -11,3 +13,14 @@ def test_smartphone_init(product_smartphone1: Smartphone) -> None:
     assert product_smartphone1.model == "S23 Ultra"
     assert product_smartphone1.memory == 256
     assert product_smartphone1.color == "Серый"
+
+
+def test_smartphone_add(product_smartphone1, product_smartphone2):
+    """Тестируем метод для ограничения сложения разных классов"""
+    assert product_smartphone1 + product_smartphone2 == 13
+
+
+def test_smartphone_add_error(product_grass1, product_smartphone2):
+    """Вызываем ошибку при попытке сложения разных классов"""
+    with pytest.raises(TypeError):
+        product_grass1 + product_smartphone2

@@ -41,17 +41,17 @@ def test_category_str(second_category: Category) -> None:
     assert str(second_category) == "Телевизоры, количество продуктов: 7 шт."
 
 
-# noinspection PyTypeChecker
-def test_category_add_product_invalid(first_category: Category) -> None:
-    """Тестируем поведение метода добавления продукта в атрибут products при попытке добавить вместо
-    продукта другой объект - вызываем ошибку"""
-    with pytest.raises(TypeError):
-        first_category.add_product("Not a product")
-
-
 def test_category_middle_price(first_category: Category) -> None:
     """Тестируем метод, который подсчитывает средний ценник всех товаров в данной категории,
     в том числе и случай, когда в категории нет товаров"""
     category_empty = Category("Пустая категория", "Категория без продуктов", [])
     assert first_category.middle_price() == 111629.63
     assert category_empty.middle_price() == 0
+
+
+# noinspection PyTypeChecker
+def test_category_add_product_invalid(first_category: Category) -> None:
+    """Тестируем поведение метода добавления продукта в атрибут products при попытке добавить вместо
+    продукта другой объект - вызываем ошибку"""
+    with pytest.raises(TypeError):
+        first_category.add_product("Not a product")

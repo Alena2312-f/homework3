@@ -5,15 +5,19 @@ from src.category import Category
 from src.product import Product
 
 
-def test_category_init(category):
-    assert category.name == "Смартфоны"
-    assert (
-        category.description
-        == "Смартфоны, как средство не только коммуникации, но и получения дополнительных функций для удобства жизни"
+def test_category(first_category: Category, second_category: Category) -> None:
+    """Тестируем инициализацию объекта класса Category"""
+    assert first_category.name == "Смартфоны"
+    assert first_category.description == (
+        "Смартфоны, как средство не только коммуникации," " но и получения дополнительных функций"
     )
+    assert len(first_category.products_in_list) == 3
 
-    assert category.category_count == 1
-    assert category.product_count == 1
+    assert first_category.category_count == 2
+    assert second_category.category_count == 2
+
+    assert first_category.product_count == 4
+    assert second_category.product_count == 4
 
 
 def test_category_products_property(first_category: Category) -> None:
@@ -41,17 +45,16 @@ def test_category_str(second_category: Category) -> None:
     assert str(second_category) == "Телевизоры, количество продуктов: 7 шт."
 
 
+def test_category_add_product_invalid(first_category: Category) -> None:
+    """Тестируем поведение метода добавления продукта в атрибут products при попытке добавить вместо
+    продукта другой объект - вызываем ошибку"""
+    with pytest.raises(TypeError):
+        first_category.add_product("Not a product")
+
+
 def test_category_middle_price(first_category: Category) -> None:
     """Тестируем метод, который подсчитывает средний ценник всех товаров в данной категории,
     в том числе и случай, когда в категории нет товаров"""
     category_empty = Category("Пустая категория", "Категория без продуктов", [])
     assert first_category.middle_price() == 111629.63
     assert category_empty.middle_price() == 0
-
-
-# noinspection PyTypeChecker
-def test_category_add_product_invalid(first_category: Category) -> None:
-    """Тестируем поведение метода добавления продукта в атрибут products при попытке добавить вместо
-    продукта другой объект - вызываем ошибку"""
-    with pytest.raises(TypeError):
-        first_category.add_product("Not a product")
